@@ -5,27 +5,27 @@ module tb_bilinear_interpolation;
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // 参数定义 (Parameters)
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    // 源图像参数
-        localparam         SRC_IMG_WIDTH    = 640                  ;  // 源图像宽度
-        localparam         SRC_IMG_HEIGHT   = 480                  ;  // 源图像高度
-        localparam         SRC_H_BLANK      = 160                  ;  // 源图像行消隐
-        localparam         SRC_V_BLANK      = 45                   ;   // 源图像场消隐
+    // 源图像参数 (输入 1024×768)
+        localparam         SRC_IMG_WIDTH    = 1024                 ;  // 源图像宽度
+        localparam         SRC_IMG_HEIGHT   = 768                  ;  // 源图像高度
+        localparam         SRC_H_BLANK      = 160                  ;  // 源图像行消隐 (保持原值或根据具体时序调整)
+        localparam         SRC_V_BLANK      = 45                   ;  // 源图像场消隐 (保持原值或根据具体时序调整)
 
-    // 目标图像参数
-        localparam         DST_IMG_WIDTH    = 1024                 ; // 目标图像宽度
-        localparam         DST_IMG_HEIGHT   = 768                  ;  // 目标图像高度
+    // 目标图像参数 (输出 640×480)
+        localparam         DST_IMG_WIDTH    = 640                  ;  // 目标图像宽度
+        localparam         DST_IMG_HEIGHT   = 480                  ;  // 目标图像高度
 
     // 缩放比例 (根据DUT注释预先计算)
-    // floor(SRC_W / DST_W * 2^16) = floor(640/1024 * 65536) = 40960
-        localparam         X_RATIO          = 16'd40960            ;
-    // floor(SRC_H / DST_H * 2^16) = floor(480/768 * 65536) = 40960
-        localparam         Y_RATIO          = 16'd40960            ;
+    // floor( SRC_W / DST_W * 2^16 ) = floor(1024/640 * 65536) = 104857
+        localparam         X_RATIO          = 18'd104857            ;
+    // floor( SRC_H / DST_H * 2^16 ) = floor(768/480 * 65536)  = 104857
+        localparam         Y_RATIO          = 18'd104857            ;
 
     // 数据位宽
         localparam         PIXEL_WIDTH      = 8                    ;
 
     // 仿真控制
-        localparam         FRAMES_TO_SIM    = 1                    ;    // 设置要仿真的总帧数
+        localparam         FRAMES_TO_SIM    = 3                    ;    // 设置要仿真的总帧数
     localparam string INPUT_FILE_NAME  = "F:/EngineeringWarehouse/ISP/ImageGen/ImageGenPY/output_pixels_hex.txt";   // 输入文件名
     localparam string OUTPUT_FILE_BASE = "F:/EngineeringWarehouse/ISP/ImageGen/ImageGenPY/FPGA_output_hex.txt"; // 输出文件名前缀
 
@@ -180,7 +180,7 @@ wire           [              31: 0]     frames_dumped_count    ;// 已转储的帧数
     // 用于生成测试图像文件 (例如, 一个水平渐变图像) 的任务
     task automatic generate_input_image(string filename, integer width, integer height);
 integer                                  file_handle            ;
-integer                                  i,                   j;
+integer                                  i, j;
 integer                                  gray_value             ;
         
         file_handle = $fopen(filename, "w");

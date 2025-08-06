@@ -12,34 +12,36 @@
 // Date         By          Version         Change Description
 //----------------------------------------------------------------------
 // 2021/03/27   CrazyBird   1.0             Original
-// 
+// 2025/8/6     ori         1.1             Update simulation frames fixed zoom
 // *********************************************************************
 module bilinear_interpolation
 #(
-    parameter C_SRC_IMG_WIDTH  = 11'd640    ,
-    parameter C_SRC_IMG_HEIGHT = 11'd480    ,
-    parameter C_DST_IMG_WIDTH  = 11'd1024   ,
-    parameter C_DST_IMG_HEIGHT = 11'd768    ,
-    parameter C_X_RATIO        = 16'd40960  ,           //  floor(C_SRC_IMG_WIDTH/C_DST_IMG_WIDTH*2^16)
-    parameter C_Y_RATIO        = 16'd40960              //  floor(C_SRC_IMG_HEIGHT/C_DST_IMG_HEIGHT*2^16)
+    // 输入改为 1024×768，输出改为 640×480
+        parameter          C_SRC_IMG_WIDTH  = 11'd1024             ,
+        parameter          C_SRC_IMG_HEIGHT = 11'd768              ,
+        parameter          C_DST_IMG_WIDTH  = 11'd640              ,
+        parameter          C_DST_IMG_HEIGHT = 11'd480              ,
+    // ratio = floor(1024/640 * 2^16) = floor(1.6 * 65536) = 104857
+        parameter          C_X_RATIO        = 18'd104857           ,  // 扩宽到 18 位以免溢出
+        parameter          C_Y_RATIO        = 18'd104857           
 )
 (
-    input  wire                 clk_in1         ,
-    input  wire                 clk_in2         ,
-    input  wire                 rst_n           ,
+        input  wire                                       clk_in1             ,
+        input  wire                                       clk_in2             ,
+        input  wire                                       rst_n               ,
     
     //  Image data prepared to be processed
-    input  wire                 per_img_vsync   ,       //  Prepared Image data vsync valid signal
-    input  wire                 per_img_href    ,       //  Prepared Image data href vaild  signal
-    input  wire     [7:0]       per_img_gray    ,       //  Prepared Image brightness input
+        input  wire                                       per_img_vsync       ,//  Prepared Image data vsync valid signal
+        input  wire                                       per_img_href        ,//  Prepared Image data href vaild  signal
+        input  wire         [               7: 0]         per_img_gray        ,//  Prepared Image brightness input
     
     //  Image data has been processed
-    output reg                  post_img_vsync  ,       //  processed Image data vsync valid signal
-    output reg                  post_img_href   ,       //  processed Image data href vaild  signal
-    output reg      [7:0]       post_img_gray           //  processed Image brightness output
+        output reg                                        post_img_vsync      ,//  processed Image data vsync valid signal
+        output reg                                        post_img_href       ,//  processed Image data href vaild  signal
+        output reg          [               7: 0]         post_img_gray        //  processed Image brightness output
 );
 //----------------------------------------------------------------------
-reg                             per_img_href_dly;
+reg                                      per_img_href_dly       ;
 
 always @(posedge clk_in1)
 begin
@@ -49,11 +51,11 @@ begin
         per_img_href_dly <= per_img_href;
 end
 
-wire                            per_img_href_neg;
+wire                                     per_img_href_neg       ;
 
-assign per_img_href_neg = per_img_href_dly & ~per_img_href;
+assign   per_img_href_neg = per_img_href_dly & ~per_img_href;
 
-reg             [10:0]          img_vs_cnt;                             //  from 0 to C_SRC_IMG_HEIGHT - 1
+reg            [              10: 0]     img_vs_cnt             ;//  from 0 to C_SRC_IMG_HEIGHT - 1
 
 always @(posedge clk_in1)
 begin
@@ -73,7 +75,7 @@ begin
     end
 end
 
-reg             [10:0]          img_hs_cnt;                             //  from 0 to C_SRC_IMG_WIDTH - 1
+reg            [              10: 0]     img_hs_cnt             ;//  from 0 to C_SRC_IMG_WIDTH - 1
 
 always @(posedge clk_in1)
 begin
@@ -89,21 +91,21 @@ begin
 end
 
 //----------------------------------------------------------------------
-reg             [7:0]           bram_a_wdata;
+reg            [               7: 0]     bram_a_wdata           ;
 
 always @(posedge clk_in1)
 begin
     bram_a_wdata <= per_img_gray;
 end
 
-reg             [11:0]          bram_a_waddr;
+reg            [              11: 0]     bram_a_waddr           ;
 
 always @(posedge clk_in1)
 begin
     bram_a_waddr <= {img_vs_cnt[2:1],10'b0} + img_hs_cnt;
 end
 
-reg                             bram1_a_wenb;
+reg                                      bram1_a_wenb           ;
 
 always @(posedge clk_in1)
 begin
@@ -113,7 +115,7 @@ begin
         bram1_a_wenb <= per_img_vsync & per_img_href & ~img_vs_cnt[0];
 end
 
-reg                             bram2_a_wenb;
+reg                                      bram2_a_wenb           ;
 
 always @(posedge clk_in1)
 begin
@@ -123,14 +125,14 @@ begin
         bram2_a_wenb <= per_img_vsync & per_img_href & img_vs_cnt[0];
 end
 
-reg             [10:0]          fifo_wdata;
+reg            [              10: 0]     fifo_wdata             ;
 
 always @(posedge clk_in1)
 begin
     fifo_wdata <= img_vs_cnt;
 end
 
-reg                             fifo_wenb;
+reg                                      fifo_wenb              ;
 
 always @(posedge clk_in1)
 begin
@@ -147,128 +149,128 @@ end
 
 //----------------------------------------------------------------------
 //  bram & fifo rw
-reg             [11:0]          even_bram1_b_raddr;
-reg             [11:0]          odd_bram1_b_raddr;
-reg             [11:0]          even_bram2_b_raddr;
-reg             [11:0]          odd_bram2_b_raddr;
-wire            [ 7:0]          even_bram1_b_rdata;
-wire            [ 7:0]          odd_bram1_b_rdata;
-wire            [ 7:0]          even_bram2_b_rdata;
-wire            [ 7:0]          odd_bram2_b_rdata;
+reg            [              11: 0]     even_bram1_b_raddr     ;
+reg            [              11: 0]     odd_bram1_b_raddr      ;
+reg            [              11: 0]     even_bram2_b_raddr     ;
+reg            [              11: 0]     odd_bram2_b_raddr      ;
+wire           [               7: 0]     even_bram1_b_rdata     ;
+wire           [               7: 0]     odd_bram1_b_rdata      ;
+wire           [               7: 0]     even_bram2_b_rdata     ;
+wire           [               7: 0]     odd_bram2_b_rdata      ;
 
 bram_ture_dual_port
 #(
-    .C_ADDR_WIDTH(12),
-    .C_DATA_WIDTH(8 )
+        .C_ADDR_WIDTH                      (12                             ),
+        .C_DATA_WIDTH                      (8                              ) 
 )
 u0_image_data_bram1
 (
-    .clka   (clk_in1            ),
-    .wea    (bram1_a_wenb       ),
-    .addra  (bram_a_waddr       ),
-    .dina   (bram_a_wdata       ),
-    .douta  (                   ),
-    .clkb   (clk_in2            ),
-    .web    (1'b0               ),
-    .addrb  (even_bram1_b_raddr ),
-    .dinb   (8'b0               ),
-    .doutb  (even_bram1_b_rdata )
+        .clka                              (clk_in1                        ),
+        .wea                               (bram1_a_wenb                   ),
+        .addra                             (bram_a_waddr                   ),
+        .dina                              (bram_a_wdata                   ),
+        .douta                             (                               ),
+        .clkb                              (clk_in2                        ),
+        .web                               (1'b0                           ),
+        .addrb                             (even_bram1_b_raddr             ),
+        .dinb                              (8'b0                           ),
+        .doutb                             (even_bram1_b_rdata             ) 
 );
 
 bram_ture_dual_port
 #(
-    .C_ADDR_WIDTH(12),
-    .C_DATA_WIDTH(8 )
+        .C_ADDR_WIDTH                      (12                             ),
+        .C_DATA_WIDTH                      (8                              ) 
 )
 u1_image_data_bram1
 (
-    .clka   (clk_in1            ),
-    .wea    (bram1_a_wenb       ),
-    .addra  (bram_a_waddr       ),
-    .dina   (bram_a_wdata       ),
-    .douta  (                   ),
-    .clkb   (clk_in2            ),
-    .web    (1'b0               ),
-    .addrb  (odd_bram1_b_raddr  ),
-    .dinb   (8'b0               ),
-    .doutb  (odd_bram1_b_rdata  )
+        .clka                              (clk_in1                        ),
+        .wea                               (bram1_a_wenb                   ),
+        .addra                             (bram_a_waddr                   ),
+        .dina                              (bram_a_wdata                   ),
+        .douta                             (                               ),
+        .clkb                              (clk_in2                        ),
+        .web                               (1'b0                           ),
+        .addrb                             (odd_bram1_b_raddr              ),
+        .dinb                              (8'b0                           ),
+        .doutb                             (odd_bram1_b_rdata              ) 
 );
 
 bram_ture_dual_port
 #(
-    .C_ADDR_WIDTH(12),
-    .C_DATA_WIDTH(8 )
+        .C_ADDR_WIDTH                      (12                             ),
+        .C_DATA_WIDTH                      (8                              ) 
 )
 u2_image_data_bram2
 (
-    .clka   (clk_in1            ),
-    .wea    (bram2_a_wenb       ),
-    .addra  (bram_a_waddr       ),
-    .dina   (bram_a_wdata       ),
-    .douta  (                   ),
-    .clkb   (clk_in2            ),
-    .web    (1'b0               ),
-    .addrb  (even_bram2_b_raddr ),
-    .dinb   (8'b0               ),
-    .doutb  (even_bram2_b_rdata )
+        .clka                              (clk_in1                        ),
+        .wea                               (bram2_a_wenb                   ),
+        .addra                             (bram_a_waddr                   ),
+        .dina                              (bram_a_wdata                   ),
+        .douta                             (                               ),
+        .clkb                              (clk_in2                        ),
+        .web                               (1'b0                           ),
+        .addrb                             (even_bram2_b_raddr             ),
+        .dinb                              (8'b0                           ),
+        .doutb                             (even_bram2_b_rdata             ) 
 );
 
 bram_ture_dual_port
 #(
-    .C_ADDR_WIDTH(12),
-    .C_DATA_WIDTH(8 )
+        .C_ADDR_WIDTH                      (12                             ),
+        .C_DATA_WIDTH                      (8                              ) 
 )
 u3_image_data_bram2
 (
-    .clka   (clk_in1            ),
-    .wea    (bram2_a_wenb       ),
-    .addra  (bram_a_waddr       ),
-    .dina   (bram_a_wdata       ),
-    .douta  (                   ),
-    .clkb   (clk_in2            ),
-    .web    (1'b0               ),
-    .addrb  (odd_bram2_b_raddr  ),
-    .dinb   (8'b0               ),
-    .doutb  (odd_bram2_b_rdata  )
+        .clka                              (clk_in1                        ),
+        .wea                               (bram2_a_wenb                   ),
+        .addra                             (bram_a_waddr                   ),
+        .dina                              (bram_a_wdata                   ),
+        .douta                             (                               ),
+        .clkb                              (clk_in2                        ),
+        .web                               (1'b0                           ),
+        .addrb                             (odd_bram2_b_raddr              ),
+        .dinb                              (8'b0                           ),
+        .doutb                             (odd_bram2_b_rdata              ) 
 );
 
-wire                            fifo_renb;
-wire            [10:0]          fifo_rdata;
-wire                            fifo_empty;
-wire                            fifo_full;
+wire                                     fifo_renb              ;
+wire           [              10: 0]     fifo_rdata             ;
+wire                                     fifo_empty             ;
+wire                                     fifo_full              ;
 
 asyn_fifo
 #(
-    .C_DATA_WIDTH       (11),
-    .C_FIFO_DEPTH_WIDTH (4 )
+        .C_DATA_WIDTH                      (11                             ),
+        .C_FIFO_DEPTH_WIDTH                (4                              ) 
 )
 u_tag_fifo
 (
-    .wr_rst_n   (rst_n      ),
-    .wr_clk     (clk_in1    ),
-    .wr_en      (fifo_wenb  ),
-    .wr_data    (fifo_wdata ),
-    .wr_full    (fifo_full  ),
-    .wr_cnt     (           ),
-    .rd_rst_n   (rst_n      ),
-    .rd_clk     (clk_in2    ),
-    .rd_en      (fifo_renb  ),
-    .rd_data    (fifo_rdata ),
-    .rd_empty   (fifo_empty ),
-    .rd_cnt     (           )
+        .wr_rst_n                          (rst_n                          ),
+        .wr_clk                            (clk_in1                        ),
+        .wr_en                             (fifo_wenb                      ),
+        .wr_data                           (fifo_wdata                     ),
+        .wr_full                           (fifo_full                      ),
+        .wr_cnt                            (                               ),
+        .rd_rst_n                          (rst_n                          ),
+        .rd_clk                            (clk_in2                        ),
+        .rd_en                             (fifo_renb                      ),
+        .rd_data                           (fifo_rdata                     ),
+        .rd_empty                          (fifo_empty                     ),
+        .rd_cnt                            (                               ) 
 );
 
-localparam S_IDLE      = 3'd0;
-localparam S_Y_LOAD    = 3'd1;
-localparam S_BRAM_ADDR = 3'd2;
-localparam S_Y_INC     = 3'd3;
-localparam S_RD_FIFO   = 3'd4;
+        localparam         S_IDLE           = 3'd0                 ;
+        localparam         S_Y_LOAD         = 3'd1                 ;
+        localparam         S_BRAM_ADDR      = 3'd2                 ;
+        localparam         S_Y_INC          = 3'd3                 ;
+        localparam         S_RD_FIFO        = 3'd4                 ;
 
-reg             [ 2:0]          state;
-reg             [26:0]          y_dec;
-reg             [26:0]          x_dec;
-reg             [10:0]          y_cnt;
-reg             [10:0]          x_cnt;
+reg            [               2: 0]     state                  ;
+reg            [              26: 0]     y_dec                  ;
+reg            [              26: 0]     x_dec                  ;
+reg            [              10: 0]     y_cnt                  ;
+reg            [              10: 0]     x_cnt                  ;
 
 always @(posedge clk_in2)
 begin
@@ -277,7 +279,7 @@ begin
     else
     begin
         case(state)
-            S_IDLE : 
+            S_IDLE :
             begin
                 if(fifo_empty == 1'b0)
                 begin
@@ -289,32 +291,32 @@ begin
                 else
                     state <= S_IDLE;
             end
-            S_Y_LOAD : 
+            S_Y_LOAD :
             begin
                 if((y_dec[26:16] + 1'b1 <= fifo_rdata)||(y_cnt == C_DST_IMG_HEIGHT - 1'b1))
                     state <= S_BRAM_ADDR;
                 else
                     state <= S_RD_FIFO;
             end
-            S_BRAM_ADDR : 
+            S_BRAM_ADDR :
             begin
                 if(x_cnt == C_DST_IMG_WIDTH - 1'b1)
                     state <= S_Y_INC;
                 else
                     state <= S_BRAM_ADDR;
             end
-            S_Y_INC : 
+            S_Y_INC :
             begin
                 if(y_cnt == C_DST_IMG_HEIGHT - 1'b1)
                     state <= S_RD_FIFO;
                 else
                     state <= S_Y_LOAD;
             end
-            S_RD_FIFO : 
+            S_RD_FIFO :
             begin
                 state <= S_IDLE;
             end
-            default : 
+            default :
             begin
                 state <= S_IDLE;
             end
@@ -322,7 +324,7 @@ begin
     end
 end
 
-assign fifo_renb = (state == S_RD_FIFO) ? 1'b1 : 1'b0;
+assign   fifo_renb        = (state == S_RD_FIFO) ? 1'b1 : 1'b0;
 
 always @(posedge clk_in2)
 begin
@@ -372,7 +374,7 @@ end
 
 //----------------------------------------------------------------------
 //  c1
-reg                             img_vs_c1;
+reg                                      img_vs_c1              ;
 
 always @(posedge clk_in2)
 begin
@@ -389,7 +391,7 @@ begin
     end
 end
 
-reg                             img_hs_c1;
+reg                                      img_hs_c1              ;
 
 always @(posedge clk_in2)
 begin
@@ -404,12 +406,12 @@ begin
     end
 end
 
-reg             [10:0]          x_int_c1;
-reg             [10:0]          y_int_c1;
-reg             [16:0]          x_fra_c1;
-reg             [16:0]          inv_x_fra_c1;
-reg             [16:0]          y_fra_c1;
-reg             [16:0]          inv_y_fra_c1;
+reg            [              10: 0]     x_int_c1               ;
+reg            [              10: 0]     y_int_c1               ;
+reg            [              16: 0]     x_fra_c1               ;
+reg            [              16: 0]     inv_x_fra_c1           ;
+reg            [              16: 0]     y_fra_c1               ;
+reg            [              16: 0]     inv_y_fra_c1           ;
 
 always @(posedge clk_in2)
 begin
@@ -423,8 +425,8 @@ end
 
 //----------------------------------------------------------------------
 //  c2
-reg                             img_vs_c2;
-reg                             img_hs_c2;
+reg                                      img_vs_c2              ;
+reg                                      img_hs_c2              ;
 
 always @(posedge clk_in2)
 begin
@@ -440,12 +442,12 @@ begin
     end
 end
 
-reg             [11:0]          bram_addr_c2;
-reg             [33:0]          frac_00_c2;
-reg             [33:0]          frac_01_c2;
-reg             [33:0]          frac_10_c2;
-reg             [33:0]          frac_11_c2;
-reg                             bram_mode_c2;
+reg            [              11: 0]     bram_addr_c2           ;
+reg            [              33: 0]     frac_00_c2             ;
+reg            [              33: 0]     frac_01_c2             ;
+reg            [              33: 0]     frac_10_c2             ;
+reg            [              33: 0]     frac_11_c2             ;
+reg                                      bram_mode_c2           ;
 
 always @(posedge clk_in2)
 begin
@@ -457,8 +459,8 @@ begin
     bram_mode_c2 <= y_int_c1[0];
 end
 
-reg                             right_pixel_extand_flag_c2;
-reg                             bottom_pixel_extand_flag_c2;
+reg                                      right_pixel_extand_flag_c2  ;
+reg                                      bottom_pixel_extand_flag_c2  ;
 
 always @(posedge clk_in2)
 begin
@@ -474,8 +476,8 @@ end
 
 //----------------------------------------------------------------------
 //  c3
-reg                             img_vs_c3;
-reg                             img_hs_c3;
+reg                                      img_vs_c3              ;
+reg                                      img_hs_c3              ;
 
 always @(posedge clk_in2)
 begin
@@ -509,13 +511,13 @@ begin
     end
 end
 
-reg             [33:0]          frac_00_c3;
-reg             [33:0]          frac_01_c3;
-reg             [33:0]          frac_10_c3;
-reg             [33:0]          frac_11_c3;
-reg                             bram_mode_c3;
-reg                             right_pixel_extand_flag_c3;
-reg                             bottom_pixel_extand_flag_c3;
+reg            [              33: 0]     frac_00_c3             ;
+reg            [              33: 0]     frac_01_c3             ;
+reg            [              33: 0]     frac_10_c3             ;
+reg            [              33: 0]     frac_11_c3             ;
+reg                                      bram_mode_c3           ;
+reg                                      right_pixel_extand_flag_c3  ;
+reg                                      bottom_pixel_extand_flag_c3  ;
 
 always @(posedge clk_in2)
 begin
@@ -530,8 +532,8 @@ end
 
 //----------------------------------------------------------------------
 //  c4
-reg                             img_vs_c4;
-reg                             img_hs_c4;
+reg                                      img_vs_c4              ;
+reg                                      img_hs_c4              ;
 
 always @(posedge clk_in2)
 begin
@@ -547,13 +549,13 @@ begin
     end
 end
 
-reg             [33:0]          frac_00_c4;
-reg             [33:0]          frac_01_c4;
-reg             [33:0]          frac_10_c4;
-reg             [33:0]          frac_11_c4;
-reg                             bram_mode_c4;
-reg                             right_pixel_extand_flag_c4;
-reg                             bottom_pixel_extand_flag_c4;
+reg            [              33: 0]     frac_00_c4             ;
+reg            [              33: 0]     frac_01_c4             ;
+reg            [              33: 0]     frac_10_c4             ;
+reg            [              33: 0]     frac_11_c4             ;
+reg                                      bram_mode_c4           ;
+reg                                      right_pixel_extand_flag_c4  ;
+reg                                      bottom_pixel_extand_flag_c4  ;
 
 always @(posedge clk_in2)
 begin
@@ -568,8 +570,8 @@ end
 
 //----------------------------------------------------------------------
 //  c5
-reg                             img_vs_c5;
-reg                             img_hs_c5;
+reg                                      img_vs_c5              ;
+reg                                      img_hs_c5              ;
 
 always @(posedge clk_in2)
 begin
@@ -585,10 +587,10 @@ begin
     end
 end
 
-reg             [7:0]           pixel_data00_c5;
-reg             [7:0]           pixel_data01_c5;
-reg             [7:0]           pixel_data10_c5;
-reg             [7:0]           pixel_data11_c5;
+reg            [               7: 0]     pixel_data00_c5        ;
+reg            [               7: 0]     pixel_data01_c5        ;
+reg            [               7: 0]     pixel_data10_c5        ;
+reg            [               7: 0]     pixel_data11_c5        ;
 
 always @(posedge clk_in2)
 begin
@@ -608,12 +610,12 @@ begin
     end
 end
 
-reg             [33:0]          frac_00_c5;
-reg             [33:0]          frac_01_c5;
-reg             [33:0]          frac_10_c5;
-reg             [33:0]          frac_11_c5;
-reg                             right_pixel_extand_flag_c5;
-reg                             bottom_pixel_extand_flag_c5;
+reg            [              33: 0]     frac_00_c5             ;
+reg            [              33: 0]     frac_01_c5             ;
+reg            [              33: 0]     frac_10_c5             ;
+reg            [              33: 0]     frac_11_c5             ;
+reg                                      right_pixel_extand_flag_c5  ;
+reg                                      bottom_pixel_extand_flag_c5  ;
 
 always @(posedge clk_in2)
 begin
@@ -627,8 +629,8 @@ end
 
 //----------------------------------------------------------------------
 //  c6
-reg                             img_vs_c6;
-reg                             img_hs_c6;
+reg                                      img_vs_c6              ;
+reg                                      img_hs_c6              ;
 
 always @(posedge clk_in2)
 begin
@@ -644,36 +646,36 @@ begin
     end
 end
 
-reg             [7:0]           pixel_data00_c6;
-reg             [7:0]           pixel_data01_c6;
-reg             [7:0]           pixel_data10_c6;
-reg             [7:0]           pixel_data11_c6;
+reg            [               7: 0]     pixel_data00_c6        ;
+reg            [               7: 0]     pixel_data01_c6        ;
+reg            [               7: 0]     pixel_data10_c6        ;
+reg            [               7: 0]     pixel_data11_c6        ;
 
 always @(posedge clk_in2)
 begin
     case({right_pixel_extand_flag_c5,bottom_pixel_extand_flag_c5})
-        2'b00 : 
+        2'b00 :
         begin
             pixel_data00_c6 <= pixel_data00_c5;
             pixel_data01_c6 <= pixel_data01_c5;
             pixel_data10_c6 <= pixel_data10_c5;
             pixel_data11_c6 <= pixel_data11_c5;
         end
-        2'b01 : 
+        2'b01 :
         begin
             pixel_data00_c6 <= pixel_data00_c5;
             pixel_data01_c6 <= pixel_data01_c5;
             pixel_data10_c6 <= pixel_data00_c5;
             pixel_data11_c6 <= pixel_data01_c5;
         end
-        2'b10 : 
+        2'b10 :
         begin
             pixel_data00_c6 <= pixel_data00_c5;
             pixel_data01_c6 <= pixel_data00_c5;
             pixel_data10_c6 <= pixel_data10_c5;
             pixel_data11_c6 <= pixel_data10_c5;
         end
-        2'b11 : 
+        2'b11 :
         begin
             pixel_data00_c6 <= pixel_data00_c5;
             pixel_data01_c6 <= pixel_data00_c5;
@@ -683,10 +685,10 @@ begin
     endcase
 end
 
-reg             [33:0]          frac_00_c6;
-reg             [33:0]          frac_01_c6;
-reg             [33:0]          frac_10_c6;
-reg             [33:0]          frac_11_c6;
+reg            [              33: 0]     frac_00_c6             ;
+reg            [              33: 0]     frac_01_c6             ;
+reg            [              33: 0]     frac_10_c6             ;
+reg            [              33: 0]     frac_11_c6             ;
 
 always @(posedge clk_in2)
 begin
@@ -698,8 +700,8 @@ end
 
 //----------------------------------------------------------------------
 //  c7
-reg                             img_vs_c7;
-reg                             img_hs_c7;
+reg                                      img_vs_c7              ;
+reg                                      img_hs_c7              ;
 
 always @(posedge clk_in2)
 begin
@@ -715,10 +717,10 @@ begin
     end
 end
 
-reg             [41:0]          gray_data00_c7;
-reg             [41:0]          gray_data01_c7;
-reg             [41:0]          gray_data10_c7;
-reg             [41:0]          gray_data11_c7;
+reg            [              41: 0]     gray_data00_c7         ;
+reg            [              41: 0]     gray_data01_c7         ;
+reg            [              41: 0]     gray_data10_c7         ;
+reg            [              41: 0]     gray_data11_c7         ;
 
 always @(posedge clk_in2)
 begin
@@ -730,8 +732,8 @@ end
 
 //----------------------------------------------------------------------
 //  c8
-reg                             img_vs_c8;
-reg                             img_hs_c8;
+reg                                      img_vs_c8              ;
+reg                                      img_hs_c8              ;
 
 always @(posedge clk_in2)
 begin
@@ -747,8 +749,8 @@ begin
     end
 end
 
-reg             [42:0]          gray_data_tmp1_c8;
-reg             [42:0]          gray_data_tmp2_c8;
+reg            [              42: 0]     gray_data_tmp1_c8      ;
+reg            [              42: 0]     gray_data_tmp2_c8      ;
 
 always @(posedge clk_in2)
 begin
@@ -758,8 +760,8 @@ end
 
 //----------------------------------------------------------------------
 //  c9
-reg                             img_vs_c9;
-reg                             img_hs_c9;
+reg                                      img_vs_c9              ;
+reg                                      img_hs_c9              ;
 
 always @(posedge clk_in2)
 begin
@@ -775,7 +777,7 @@ begin
     end
 end
 
-reg             [43:0]          gray_data_c9;
+reg            [              43: 0]     gray_data_c9           ;
 
 always @(posedge clk_in2)
 begin
@@ -784,8 +786,8 @@ end
 
 //----------------------------------------------------------------------
 //  c10
-reg                             img_vs_c10;
-reg                             img_hs_c10;
+reg                                      img_vs_c10             ;
+reg                                      img_hs_c10             ;
 
 always @(posedge clk_in2)
 begin
@@ -801,7 +803,7 @@ begin
     end
 end
 
-reg             [11:0]          gray_data_c10;
+reg            [              11: 0]     gray_data_c10          ;
 
 always @(posedge clk_in2)
 begin
