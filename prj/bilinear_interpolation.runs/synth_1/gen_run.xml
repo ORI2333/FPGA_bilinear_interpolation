@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GenRun Id="synth_1" LaunchPart="xc7k325tffg900-2L" LaunchTime="1754463864" LaunchIncrCheckpoint="$PSRCDIR/utils_1/imports/synth_1/bilinear_interpolation.dcp">
   <File Type="PA-TCL" Name="bilinear_interpolation.tcl"/>
-  <File Type="RDS-PROPCONSTRS" Name="bilinear_interpolation_drc_synth.rpt"/>
   <File Type="REPORTS-TCL" Name="bilinear_interpolation_reports.tcl"/>
   <File Type="RDS-RDS" Name="bilinear_interpolation.vds"/>
   <File Type="RDS-UTIL" Name="bilinear_interpolation_utilization_synth.rpt"/>
   <File Type="RDS-UTIL-PB" Name="bilinear_interpolation_utilization_synth.pb"/>
   <File Type="RDS-DCP" Name="bilinear_interpolation.dcp"/>
-  <File Type="VDS-TIMINGSUMMARY" Name="bilinear_interpolation_timing_summary_synth.rpt"/>
-  <File Type="VDS-TIMING-PB" Name="bilinear_interpolation_timing_summary_synth.pb"/>
   <FileSet Name="sources" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1" RelGenDir="$PGENDIR/sources_1">
     <Filter Type="Srcs"/>
     <File Path="$PPRDIR/../src/asyn_fifo.v">
@@ -75,9 +72,7 @@
     </Config>
   </FileSet>
   <Strategy Version="1" Minor="2">
-    <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2023">
-      <Desc>Vivado Synthesis Defaults</Desc>
-    </StratHandle>
+    <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2023"/>
     <Step Id="synth_design"/>
   </Strategy>
 </GenRun>
