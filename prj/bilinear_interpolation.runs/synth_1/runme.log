@@ -1,0 +1,557 @@
+
+*** Running vivado
+    with args -log bilinear_interpolation.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source bilinear_interpolation.tcl
+
+
+ECHO 处于关闭状态。
+ECHO 处于关闭状态。
+
+****** Vivado v2023.1 (64-bit)
+  **** SW Build 3865809 on Sun May  7 15:05:29 MDT 2023
+  **** IP Build 3864474 on Sun May  7 20:36:21 MDT 2023
+  **** SharedData Build 3865790 on Sun May 07 13:33:03 MDT 2023
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source bilinear_interpolation.tcl -notrace
+Command: read_checkpoint -auto_incremental -incremental F:/EngineeringWarehouse/ISP/Zoom/bilinear_interpolation/prj/bilinear_interpolation.srcs/utils_1/imports/synth_1/bilinear_interpolation.dcp
+INFO: [Vivado 12-5825] Read reference checkpoint from F:/EngineeringWarehouse/ISP/Zoom/bilinear_interpolation/prj/bilinear_interpolation.srcs/utils_1/imports/synth_1/bilinear_interpolation.dcp for incremental synthesis
+INFO: [Vivado 12-7989] Please ensure there are no constraint changes
+Command: synth_design -top bilinear_interpolation -part xc7k325tffg900-2L
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7k325t'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7k325t'
+INFO: [Designutils 20-5440] No compile time benefit to using incremental synthesis; A full resynthesis will be run
+INFO: [Designutils 20-4379] Flow is switching to default flow due to incremental criteria not met. If you would like to alter this behaviour and have the flow terminate instead, please set the following parameter config_implementation {autoIncr.Synth.RejectBehavior Terminate}
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 30028
+---------------------------------------------------------------------------------
+Starting Synthesize : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 920.520 ; gain = 410.289
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6157] synthesizing module 'bilinear_interpolation' [F:/EngineeringWarehouse/ISP/Zoom/bilinear_interpolation/src/bilinear_interpolation.v:17]
+INFO: [Synth 8-6157] synthesizing module 'bram_ture_dual_port' [F:/EngineeringWarehouse/ISP/Zoom/bilinear_interpolation/src/bram_ture_dual_port.v:1]
+	Parameter C_ADDR_WIDTH bound to: 12 - type: integer 
+	Parameter C_DATA_WIDTH bound to: 8 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'bram_ture_dual_port' (0#1) [F:/EngineeringWarehouse/ISP/Zoom/bilinear_interpolation/src/bram_ture_dual_port.v:1]
+INFO: [Synth 8-6157] synthesizing module 'asyn_fifo' [F:/EngineeringWarehouse/ISP/Zoom/bilinear_interpolation/src/asyn_fifo.v:17]
+	Parameter C_DATA_WIDTH bound to: 11 - type: integer 
+	Parameter C_FIFO_DEPTH_WIDTH bound to: 4 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'asyn_fifo' (0#1) [F:/EngineeringWarehouse/ISP/Zoom/bilinear_interpolation/src/asyn_fifo.v:17]
+INFO: [Synth 8-6155] done synthesizing module 'bilinear_interpolation' (0#1) [F:/EngineeringWarehouse/ISP/Zoom/bilinear_interpolation/src/bilinear_interpolation.v:17]
+---------------------------------------------------------------------------------
+Finished Synthesize : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 1021.691 ; gain = 511.461
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 1021.691 ; gain = 511.461
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7k325tffg900-2L
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 1021.691 ; gain = 511.461
+---------------------------------------------------------------------------------
+INFO: [Device 21-403] Loading part xc7k325tffg900-2L
+INFO: [Synth 8-3971] The signal "bram_ture_dual_port:/mem_reg" was recognized as a true dual port RAM template.
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1032.469 ; gain = 522.238
+---------------------------------------------------------------------------------
+No constraint files found.
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input   44 Bit       Adders := 1     
+	   2 Input   43 Bit       Adders := 1     
+	   2 Input   42 Bit       Adders := 1     
+	   2 Input   17 Bit       Adders := 2     
+	   2 Input   12 Bit       Adders := 6     
+	   2 Input   11 Bit       Adders := 5     
+	   2 Input    5 Bit       Adders := 3     
+	   3 Input    4 Bit       Adders := 2     
++---XORs : 
+	   2 Input      5 Bit         XORs := 2     
++---XORs : 
+	                5 Bit    Wide XORs := 8     
++---Registers : 
+	               44 Bit    Registers := 1     
+	               43 Bit    Registers := 1     
+	               42 Bit    Registers := 2     
+	               41 Bit    Registers := 2     
+	               40 Bit    Registers := 1     
+	               34 Bit    Registers := 3     
+	               33 Bit    Registers := 6     
+	               32 Bit    Registers := 2     
+	               17 Bit    Registers := 1     
+	               16 Bit    Registers := 3     
+	               12 Bit    Registers := 7     
+	               11 Bit    Registers := 5     
+	               10 Bit    Registers := 2     
+	                8 Bit    Registers := 18    
+	                5 Bit    Registers := 8     
+	                3 Bit    Registers := 1     
+	                1 Bit    Registers := 37    
++---Multipliers : 
+	               8x34  Multipliers := 1     
+	               8x33  Multipliers := 2     
+	               8x32  Multipliers := 1     
++---RAMs : 
+	              32K Bit	(4096 X 8 bit)          RAMs := 4     
+	              176 Bit	(16 X 11 bit)          RAMs := 1     
++---Muxes : 
+	   2 Input   12 Bit        Muxes := 1     
+	   2 Input    8 Bit        Muxes := 4     
+	   4 Input    8 Bit        Muxes := 3     
+	   3 Input    3 Bit        Muxes := 1     
+	   2 Input    3 Bit        Muxes := 1     
+	   2 Input    2 Bit        Muxes := 1     
+	   2 Input    1 Bit        Muxes := 8     
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 840 (col length:140)
+BRAMs: 890 (col length: RAMB18 140 RAMB36 70)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+No constraint files found.
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-7080] Parallel synthesis criteria is not met
+DSP Report: Generating DSP frac_11_c4_reg, operation Mode is: (A''*B'')'.
+DSP Report: register x_fra_c1_reg is absorbed into DSP frac_11_c4_reg.
+DSP Report: register y_fra_c1_reg is absorbed into DSP frac_11_c4_reg.
+DSP Report: register frac_11_c2_reg is absorbed into DSP frac_11_c4_reg.
+DSP Report: register frac_11_c2_reg is absorbed into DSP frac_11_c4_reg.
+DSP Report: register frac_11_c4_reg is absorbed into DSP frac_11_c4_reg.
+DSP Report: register frac_11_c3_reg is absorbed into DSP frac_11_c4_reg.
+DSP Report: operator frac_11_c20 is absorbed into DSP frac_11_c4_reg.
+DSP Report: Generating DSP gray_data11_c70, operation Mode is: A''*B2.
+DSP Report: register gray_data11_c70 is absorbed into DSP gray_data11_c70.
+DSP Report: register gray_data11_c70 is absorbed into DSP gray_data11_c70.
+DSP Report: register gray_data11_c70 is absorbed into DSP gray_data11_c70.
+DSP Report: operator gray_data11_c70 is absorbed into DSP gray_data11_c70.
+DSP Report: operator gray_data11_c70 is absorbed into DSP gray_data11_c70.
+DSP Report: Generating DSP gray_data11_c7_reg, operation Mode is: (PCIN>>17)+A''*B2.
+DSP Report: register gray_data11_c7_reg is absorbed into DSP gray_data11_c7_reg.
+DSP Report: register frac_11_c5_reg is absorbed into DSP gray_data11_c7_reg.
+DSP Report: register frac_11_c6_reg is absorbed into DSP gray_data11_c7_reg.
+DSP Report: register gray_data11_c7_reg is absorbed into DSP gray_data11_c7_reg.
+DSP Report: operator gray_data11_c70 is absorbed into DSP gray_data11_c7_reg.
+DSP Report: operator gray_data11_c70 is absorbed into DSP gray_data11_c7_reg.
+DSP Report: Generating DSP frac_10_c3_reg, operation Mode is: (A2*B2)'.
+DSP Report: register y_fra_c1_reg is absorbed into DSP frac_10_c3_reg.
+DSP Report: register inv_x_fra_c1_reg is absorbed into DSP frac_10_c3_reg.
+DSP Report: register frac_10_c3_reg is absorbed into DSP frac_10_c3_reg.
+DSP Report: register frac_10_c2_reg is absorbed into DSP frac_10_c3_reg.
+DSP Report: operator frac_10_c20 is absorbed into DSP frac_10_c3_reg.
+DSP Report: Generating DSP gray_data10_c70, operation Mode is: A''*B2.
+DSP Report: register gray_data10_c70 is absorbed into DSP gray_data10_c70.
+DSP Report: register gray_data10_c70 is absorbed into DSP gray_data10_c70.
+DSP Report: register gray_data10_c70 is absorbed into DSP gray_data10_c70.
+DSP Report: operator gray_data10_c70 is absorbed into DSP gray_data10_c70.
+DSP Report: operator gray_data10_c70 is absorbed into DSP gray_data10_c70.
+DSP Report: Generating DSP gray_data10_c7_reg, operation Mode is: (PCIN>>17)+A''*B2.
+DSP Report: register gray_data10_c7_reg is absorbed into DSP gray_data10_c7_reg.
+DSP Report: register frac_10_c5_reg is absorbed into DSP gray_data10_c7_reg.
+DSP Report: register frac_10_c6_reg is absorbed into DSP gray_data10_c7_reg.
+DSP Report: register gray_data10_c7_reg is absorbed into DSP gray_data10_c7_reg.
+DSP Report: operator gray_data10_c70 is absorbed into DSP gray_data10_c7_reg.
+DSP Report: operator gray_data10_c70 is absorbed into DSP gray_data10_c7_reg.
+DSP Report: Generating DSP frac_01_c3_reg, operation Mode is: (A2*B2)'.
+DSP Report: register x_fra_c1_reg is absorbed into DSP frac_01_c3_reg.
+DSP Report: register inv_y_fra_c1_reg is absorbed into DSP frac_01_c3_reg.
+DSP Report: register frac_01_c3_reg is absorbed into DSP frac_01_c3_reg.
+DSP Report: register frac_01_c2_reg is absorbed into DSP frac_01_c3_reg.
+DSP Report: operator frac_01_c20 is absorbed into DSP frac_01_c3_reg.
+DSP Report: Generating DSP gray_data01_c70, operation Mode is: A''*B2.
+DSP Report: register gray_data01_c70 is absorbed into DSP gray_data01_c70.
+DSP Report: register gray_data01_c70 is absorbed into DSP gray_data01_c70.
+DSP Report: register gray_data01_c70 is absorbed into DSP gray_data01_c70.
+DSP Report: operator gray_data01_c70 is absorbed into DSP gray_data01_c70.
+DSP Report: operator gray_data01_c70 is absorbed into DSP gray_data01_c70.
+DSP Report: Generating DSP gray_data01_c7_reg, operation Mode is: (PCIN>>17)+A''*B2.
+DSP Report: register gray_data01_c7_reg is absorbed into DSP gray_data01_c7_reg.
+DSP Report: register frac_01_c5_reg is absorbed into DSP gray_data01_c7_reg.
+DSP Report: register frac_01_c6_reg is absorbed into DSP gray_data01_c7_reg.
+DSP Report: register gray_data01_c7_reg is absorbed into DSP gray_data01_c7_reg.
+DSP Report: operator gray_data01_c70 is absorbed into DSP gray_data01_c7_reg.
+DSP Report: operator gray_data01_c70 is absorbed into DSP gray_data01_c7_reg.
+DSP Report: Generating DSP frac_00_c3_reg, operation Mode is: (A2*B2)'.
+DSP Report: register inv_y_fra_c1_reg is absorbed into DSP frac_00_c3_reg.
+DSP Report: register inv_x_fra_c1_reg is absorbed into DSP frac_00_c3_reg.
+DSP Report: register frac_00_c3_reg is absorbed into DSP frac_00_c3_reg.
+DSP Report: register frac_00_c2_reg is absorbed into DSP frac_00_c3_reg.
+DSP Report: operator frac_00_c20 is absorbed into DSP frac_00_c3_reg.
+DSP Report: Generating DSP gray_data00_c70, operation Mode is: A''*B''.
+DSP Report: register gray_data00_c70 is absorbed into DSP gray_data00_c70.
+DSP Report: register gray_data00_c70 is absorbed into DSP gray_data00_c70.
+DSP Report: register gray_data00_c70 is absorbed into DSP gray_data00_c70.
+DSP Report: register gray_data00_c70 is absorbed into DSP gray_data00_c70.
+DSP Report: operator gray_data00_c70 is absorbed into DSP gray_data00_c70.
+DSP Report: operator gray_data00_c70 is absorbed into DSP gray_data00_c70.
+DSP Report: Generating DSP gray_data00_c7_reg, operation Mode is: (PCIN>>17)+A''*B''.
+DSP Report: register gray_data00_c7_reg is absorbed into DSP gray_data00_c7_reg.
+DSP Report: register gray_data00_c7_reg is absorbed into DSP gray_data00_c7_reg.
+DSP Report: register frac_00_c5_reg is absorbed into DSP gray_data00_c7_reg.
+DSP Report: register frac_00_c6_reg is absorbed into DSP gray_data00_c7_reg.
+DSP Report: register gray_data00_c7_reg is absorbed into DSP gray_data00_c7_reg.
+DSP Report: operator gray_data00_c70 is absorbed into DSP gray_data00_c7_reg.
+DSP Report: operator gray_data00_c70 is absorbed into DSP gray_data00_c7_reg.
+WARNING: [Synth 8-6014] Unused sequential element u0_image_data_bram1/mem_reg was removed. 
+WARNING: [Synth 8-6014] Unused sequential element u1_image_data_bram1/mem_reg was removed. 
+WARNING: [Synth 8-6014] Unused sequential element u2_image_data_bram2/mem_reg was removed. 
+WARNING: [Synth 8-6014] Unused sequential element u3_image_data_bram2/mem_reg was removed. 
+WARNING: [Synth 8-3332] Sequential element (gray_data11_c7_reg[47]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data11_c7_reg[46]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data11_c7_reg[45]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data11_c7_reg[44]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data11_c7_reg[43]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data11_c7_reg[42]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data11_c7_reg[41]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data11_c7_reg[40]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data11_c7_reg[39]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data11_c7_reg[38]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data11_c7_reg[37]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data11_c7_reg[36]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data11_c7_reg[35]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data11_c7_reg[34]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data11_c7_reg[33]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data11_c7_reg[32]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data11_c7_reg[31]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data11_c7_reg[30]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data11_c7_reg[29]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data11_c7_reg[28]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data11_c7_reg[27]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data11_c7_reg[26]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data11_c7_reg[25]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data11_c7_reg[24]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data11_c7_reg[23]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data11_c7_reg[22]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data11_c7_reg[21]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data11_c7_reg[20]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data11_c7_reg[19]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data11_c7_reg[18]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data11_c7_reg[17]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data10_c7_reg[47]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data10_c7_reg[46]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data10_c7_reg[45]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data10_c7_reg[44]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data10_c7_reg[43]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data10_c7_reg[42]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data10_c7_reg[41]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data10_c7_reg[40]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data10_c7_reg[39]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data10_c7_reg[38]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data10_c7_reg[37]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data10_c7_reg[36]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data10_c7_reg[35]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data10_c7_reg[34]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data10_c7_reg[33]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data10_c7_reg[32]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data10_c7_reg[31]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data10_c7_reg[30]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data10_c7_reg[29]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data10_c7_reg[28]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data10_c7_reg[27]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data10_c7_reg[26]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data10_c7_reg[25]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data10_c7_reg[24]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data10_c7_reg[23]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data10_c7_reg[22]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data10_c7_reg[21]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data10_c7_reg[20]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data10_c7_reg[19]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data10_c7_reg[18]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data10_c7_reg[17]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data01_c7_reg[47]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data01_c7_reg[46]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data01_c7_reg[45]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data01_c7_reg[44]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data01_c7_reg[43]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data01_c7_reg[42]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data01_c7_reg[41]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data01_c7_reg[40]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data01_c7_reg[39]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data01_c7_reg[38]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data01_c7_reg[37]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data01_c7_reg[36]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data01_c7_reg[35]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data01_c7_reg[34]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data01_c7_reg[33]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data01_c7_reg[32]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data01_c7_reg[31]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data01_c7_reg[30]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data01_c7_reg[29]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data01_c7_reg[28]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data01_c7_reg[27]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data01_c7_reg[26]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data01_c7_reg[25]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data01_c7_reg[24]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data01_c7_reg[23]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data01_c7_reg[22]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data01_c7_reg[21]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data01_c7_reg[20]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data01_c7_reg[19]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data01_c7_reg[18]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data01_c7_reg[17]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data00_c7_reg[47]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data00_c7_reg[46]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data00_c7_reg[45]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data00_c7_reg[44]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data00_c7_reg[43]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data00_c7_reg[42]) is unused and will be removed from module bilinear_interpolation.
+WARNING: [Synth 8-3332] Sequential element (gray_data00_c7_reg[41]) is unused and will be removed from module bilinear_interpolation.
+INFO: [Common 17-14] Message 'Synth 8-3332' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:10 ; elapsed = 00:00:11 . Memory (MB): peak = 1269.562 ; gain = 759.332
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+
+Block RAM: Preliminary Mapping Report (see note below)
++-----------------------+-----------------------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+|Module Name            | RTL Object                  | PORT A (Depth x Width) | W | R | PORT B (Depth x Width) | W | R | Ports driving FF | RAMB18 | RAMB36 | 
++-----------------------+-----------------------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+|bilinear_interpolation | u0_image_data_bram1/mem_reg | 4 K x 8(NO_CHANGE)     | W |   | 4 K x 8(WRITE_FIRST)   |   | R | Port A and B     | 0      | 1      | 
+|bilinear_interpolation | u1_image_data_bram1/mem_reg | 4 K x 8(NO_CHANGE)     | W |   | 4 K x 8(WRITE_FIRST)   |   | R | Port A and B     | 0      | 1      | 
+|bilinear_interpolation | u2_image_data_bram2/mem_reg | 4 K x 8(NO_CHANGE)     | W |   | 4 K x 8(WRITE_FIRST)   |   | R | Port A and B     | 0      | 1      | 
+|bilinear_interpolation | u3_image_data_bram2/mem_reg | 4 K x 8(NO_CHANGE)     | W |   | 4 K x 8(WRITE_FIRST)   |   | R | Port A and B     | 0      | 1      | 
++-----------------------+-----------------------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+
+Note: The table above is a preliminary report that shows the Block RAMs at the current stage of the synthesis flow. Some Block RAMs may be reimplemented as non Block RAM primitives later in the synthesis flow. Multiple instantiated Block RAMs are reported only once. 
+
+Distributed RAM: Preliminary Mapping Report (see note below)
++-----------------------+--------------------+-----------+----------------------+-------------+
+|Module Name            | RTL Object         | Inference | Size (Depth x Width) | Primitives  | 
++-----------------------+--------------------+-----------+----------------------+-------------+
+|bilinear_interpolation | u_tag_fifo/mem_reg | Implied   | 16 x 11              | RAM32M x 2  | 
++-----------------------+--------------------+-----------+----------------------+-------------+
+
+Note: The table above is a preliminary report that shows the Distributed RAMs at the current stage of the synthesis flow. Some Distributed RAMs may be reimplemented as non Distributed RAM primitives later in the synthesis flow. Multiple instantiated RAMs are reported only once.
+
+DSP: Preliminary Mapping Report (see note below. The ' indicates corresponding REG is set)
++-----------------------+--------------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|Module Name            | DSP Mapping        | A Size | B Size | C Size | D Size | P Size | AREG | BREG | CREG | DREG | ADREG | MREG | PREG | 
++-----------------------+--------------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|bilinear_interpolation | (A''*B'')'         | 16     | 16     | -      | -      | 32     | 2    | 2    | -    | -    | -     | 1    | 1    | 
+|bilinear_interpolation | A''*B2             | 18     | 9      | -      | -      | 48     | 2    | 1    | -    | -    | -     | 0    | 0    | 
+|bilinear_interpolation | (PCIN>>17)+A''*B2  | 16     | 9      | -      | -      | 48     | 2    | 1    | -    | -    | -     | 0    | 1    | 
+|bilinear_interpolation | (A2*B2)'           | 17     | 16     | -      | -      | 33     | 1    | 1    | -    | -    | -     | 1    | 1    | 
+|bilinear_interpolation | A''*B2             | 18     | 9      | -      | -      | 48     | 2    | 1    | -    | -    | -     | 0    | 0    | 
+|bilinear_interpolation | (PCIN>>17)+A''*B2  | 17     | 9      | -      | -      | 48     | 2    | 1    | -    | -    | -     | 0    | 1    | 
+|bilinear_interpolation | (A2*B2)'           | 17     | 16     | -      | -      | 33     | 1    | 1    | -    | -    | -     | 1    | 1    | 
+|bilinear_interpolation | A''*B2             | 18     | 9      | -      | -      | 48     | 2    | 1    | -    | -    | -     | 0    | 0    | 
+|bilinear_interpolation | (PCIN>>17)+A''*B2  | 17     | 9      | -      | -      | 48     | 2    | 1    | -    | -    | -     | 0    | 1    | 
+|bilinear_interpolation | (A2*B2)'           | 17     | 17     | -      | -      | 34     | 1    | 1    | -    | -    | -     | 1    | 1    | 
+|bilinear_interpolation | A''*B''            | 18     | 9      | -      | -      | 48     | 2    | 2    | -    | -    | -     | 0    | 0    | 
+|bilinear_interpolation | (PCIN>>17)+A''*B'' | 18     | 9      | -      | -      | 48     | 2    | 2    | -    | -    | -     | 0    | 1    | 
++-----------------------+--------------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+
+Note: The table above is a preliminary report that shows the DSPs inferred at the current stage of the synthesis flow. Some DSP may be reimplemented as non DSP primitives later in the synthesis flow. Multiple instantiated DSPs are reported only once.
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+No constraint files found.
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:10 ; elapsed = 00:00:12 . Memory (MB): peak = 1269.562 ; gain = 759.332
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+
+Block RAM: Final Mapping Report
++-----------------------+-----------------------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+|Module Name            | RTL Object                  | PORT A (Depth x Width) | W | R | PORT B (Depth x Width) | W | R | Ports driving FF | RAMB18 | RAMB36 | 
++-----------------------+-----------------------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+|bilinear_interpolation | u0_image_data_bram1/mem_reg | 4 K x 8(NO_CHANGE)     | W |   | 4 K x 8(WRITE_FIRST)   |   | R | Port A and B     | 0      | 1      | 
+|bilinear_interpolation | u1_image_data_bram1/mem_reg | 4 K x 8(NO_CHANGE)     | W |   | 4 K x 8(WRITE_FIRST)   |   | R | Port A and B     | 0      | 1      | 
+|bilinear_interpolation | u2_image_data_bram2/mem_reg | 4 K x 8(NO_CHANGE)     | W |   | 4 K x 8(WRITE_FIRST)   |   | R | Port A and B     | 0      | 1      | 
+|bilinear_interpolation | u3_image_data_bram2/mem_reg | 4 K x 8(NO_CHANGE)     | W |   | 4 K x 8(WRITE_FIRST)   |   | R | Port A and B     | 0      | 1      | 
++-----------------------+-----------------------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+
+
+Distributed RAM: Final Mapping Report
++-----------------------+--------------------+-----------+----------------------+-------------+
+|Module Name            | RTL Object         | Inference | Size (Depth x Width) | Primitives  | 
++-----------------------+--------------------+-----------+----------------------+-------------+
+|bilinear_interpolation | u_tag_fifo/mem_reg | Implied   | 16 x 11              | RAM32M x 2  | 
++-----------------------+--------------------+-----------+----------------------+-------------+
+
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+INFO: [Synth 8-7052] The timing for the instance u0_image_data_bram1/mem_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance u1_image_data_bram1/mem_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance u2_image_data_bram2/mem_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance u3_image_data_bram2/mem_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:10 ; elapsed = 00:00:12 . Memory (MB): peak = 1269.562 ; gain = 759.332
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:13 ; elapsed = 00:00:15 . Memory (MB): peak = 1269.562 ; gain = 759.332
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:13 ; elapsed = 00:00:15 . Memory (MB): peak = 1269.562 ; gain = 759.332
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:13 ; elapsed = 00:00:15 . Memory (MB): peak = 1269.562 ; gain = 759.332
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:13 ; elapsed = 00:00:15 . Memory (MB): peak = 1269.562 ; gain = 759.332
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:13 ; elapsed = 00:00:15 . Memory (MB): peak = 1269.562 ; gain = 759.332
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:13 ; elapsed = 00:00:15 . Memory (MB): peak = 1269.562 ; gain = 759.332
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+
+Static Shift Register Report:
++-----------------------+---------------------------------+--------+-------+--------------+--------------------+-------------------+--------+---------+
+|Module Name            | RTL Name                        | Length | Width | Reset Signal | Pull out first Reg | Pull out last Reg | SRL16E | SRLC32E | 
++-----------------------+---------------------------------+--------+-------+--------------+--------------------+-------------------+--------+---------+
+|bilinear_interpolation | bottom_pixel_extand_flag_c5_reg | 4      | 1     | NO           | NO                 | YES               | 1      | 0       | 
+|bilinear_interpolation | right_pixel_extand_flag_c5_reg  | 4      | 1     | NO           | NO                 | YES               | 1      | 0       | 
+|bilinear_interpolation | post_img_vsync_reg              | 10     | 1     | YES          | NO                 | YES               | 1      | 0       | 
+|bilinear_interpolation | post_img_href_reg               | 11     | 1     | YES          | NO                 | YES               | 1      | 0       | 
++-----------------------+---------------------------------+--------+-------+--------------+--------------------+-------------------+--------+---------+
+
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+DSP Final Report (the ' indicates corresponding REG is set)
++-----------------------+-----------------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|Module Name            | DSP Mapping           | A Size | B Size | C Size | D Size | P Size | AREG | BREG | CREG | DREG | ADREG | MREG | PREG | 
++-----------------------+-----------------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|bilinear_interpolation | ((A''*B'')')'         | 16     | 16     | -      | -      | 32     | 2    | 2    | -    | -    | -     | 1    | 1    | 
+|bilinear_interpolation | A''*B'                | 17     | 8      | -      | -      | 48     | 2    | 1    | -    | -    | -     | 0    | 0    | 
+|bilinear_interpolation | (PCIN>>17+A''*B)'     | 15     | 0      | -      | -      | 48     | 2    | 0    | -    | -    | -     | 0    | 1    | 
+|bilinear_interpolation | ((A'*B')')'           | 17     | 16     | -      | -      | 33     | 1    | 1    | -    | -    | -     | 1    | 1    | 
+|bilinear_interpolation | A''*B'                | 17     | 8      | -      | -      | 48     | 2    | 1    | -    | -    | -     | 0    | 0    | 
+|bilinear_interpolation | (PCIN>>17+A''*B)'     | 16     | 0      | -      | -      | 48     | 2    | 0    | -    | -    | -     | 0    | 1    | 
+|bilinear_interpolation | ((A'*B')')'           | 17     | 16     | -      | -      | 33     | 1    | 1    | -    | -    | -     | 1    | 1    | 
+|bilinear_interpolation | A''*B'                | 17     | 8      | -      | -      | 48     | 2    | 1    | -    | -    | -     | 0    | 0    | 
+|bilinear_interpolation | (PCIN>>17+A''*B)'     | 16     | 0      | -      | -      | 48     | 2    | 0    | -    | -    | -     | 0    | 1    | 
+|bilinear_interpolation | ((A'*B')')'           | 17     | 17     | -      | -      | 34     | 1    | 1    | -    | -    | -     | 1    | 1    | 
+|bilinear_interpolation | A''*B''               | 17     | 8      | -      | -      | 48     | 2    | 2    | -    | -    | -     | 0    | 0    | 
+|bilinear_interpolation | (PCIN>>17+(A''*B')')' | 17     | 8      | -      | -      | 48     | 2    | 1    | -    | -    | -     | 1    | 1    | 
++-----------------------+-----------------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+---------+------+
+|      |Cell     |Count |
++------+---------+------+
+|1     |BUFG     |     2|
+|2     |CARRY4   |    56|
+|3     |DSP48E1  |    12|
+|4     |LUT1     |    20|
+|5     |LUT2     |   152|
+|6     |LUT3     |    76|
+|7     |LUT4     |    22|
+|8     |LUT5     |    21|
+|9     |LUT6     |    41|
+|10    |RAM32M   |     2|
+|11    |RAMB36E1 |     4|
+|12    |SRL16E   |     4|
+|13    |FDCE     |    10|
+|14    |FDRE     |   513|
+|15    |FDSE     |     8|
+|16    |IBUF     |    13|
+|17    |OBUF     |    10|
++------+---------+------+
+
+Report Instance Areas: 
++------+----------------------+----------------------+------+
+|      |Instance              |Module                |Cells |
++------+----------------------+----------------------+------+
+|1     |top                   |                      |   966|
+|2     |  u0_image_data_bram1 |bram_ture_dual_port   |     9|
+|3     |  u1_image_data_bram1 |bram_ture_dual_port_0 |     9|
+|4     |  u2_image_data_bram2 |bram_ture_dual_port_1 |     9|
+|5     |  u3_image_data_bram2 |bram_ture_dual_port_2 |     9|
+|6     |  u_tag_fifo          |asyn_fifo             |    94|
++------+----------------------+----------------------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:13 ; elapsed = 00:00:15 . Memory (MB): peak = 1269.562 ; gain = 759.332
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 129 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:13 ; elapsed = 00:00:15 . Memory (MB): peak = 1269.562 ; gain = 759.332
+Synthesis Optimization Complete : Time (s): cpu = 00:00:13 ; elapsed = 00:00:15 . Memory (MB): peak = 1269.562 ; gain = 759.332
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.008 . Memory (MB): peak = 1279.910 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 74 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1383.484 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 2 instances were transformed.
+  RAM32M => RAM32M (RAMD32(x6), RAMS32(x2)): 2 instances
+
+Synth Design complete | Checksum: 10b13aad
+INFO: [Common 17-83] Releasing license: Synthesis
+28 Infos, 105 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:00:16 ; elapsed = 00:00:17 . Memory (MB): peak = 1383.484 ; gain = 885.207
+INFO: [Common 17-1381] The checkpoint 'F:/EngineeringWarehouse/ISP/Zoom/bilinear_interpolation/prj/bilinear_interpolation.runs/synth_1/bilinear_interpolation.dcp' has been generated.
+INFO: [runtcl-4] Executing : report_utilization -file bilinear_interpolation_utilization_synth.rpt -pb bilinear_interpolation_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Wed Aug  6 15:04:51 2025...

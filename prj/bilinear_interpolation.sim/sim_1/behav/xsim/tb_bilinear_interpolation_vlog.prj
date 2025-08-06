@@ -1,0 +1,16 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  \
+"../../../../../src/asyn_fifo.v" \
+"../../../../../src/bilinear_interpolation.v" \
+"../../../../../src/bram_ture_dual_port.v" \
+
+sv xil_defaultlib  \
+"../../../../../src/imageSV/image_gen.sv" \
+"../../../../../src/imageSV/image_return.sv" \
+"../../../../bilinear_interpolation.srcs/sim_1/new/tb_bilinear_interpolation.sv" \
+
+# compile glbl module
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort
