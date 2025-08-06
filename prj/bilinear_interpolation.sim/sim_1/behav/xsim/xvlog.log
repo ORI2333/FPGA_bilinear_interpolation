@@ -1,6 +1,0 @@
-INFO: [VRFC 10-2263] Analyzing SystemVerilog file "F:/EngineeringWarehouse/ISP/Zoom/bilinear_interpolation/src/imageSV/image_gen.sv" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module image_gen
-INFO: [VRFC 10-2263] Analyzing SystemVerilog file "F:/EngineeringWarehouse/ISP/Zoom/bilinear_interpolation/src/imageSV/image_return.sv" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module image_return
-INFO: [VRFC 10-2263] Analyzing SystemVerilog file "F:/EngineeringWarehouse/ISP/Zoom/bilinear_interpolation/prj/bilinear_interpolation.srcs/sim_1/new/tb_bilinear_interpolation.sv" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module tb_bilinear_interpolation

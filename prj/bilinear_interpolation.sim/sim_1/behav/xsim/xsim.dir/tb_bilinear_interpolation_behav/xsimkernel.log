@@ -1,4 +1,0 @@
-Running: xsim.dir/tb_bilinear_interpolation_behav/xsimk.exe -simmode gui -wdb tb_bilinear_interpolation_behav.wdb -simrunnum 0 -socket 11733
-Design successfully loaded
-Design Loading Memory Usage: 14284 KB (Peak: 14284 KB)
-Design Loading CPU Usage: 15 ms
